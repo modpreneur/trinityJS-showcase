@@ -1,0 +1,8 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea
+# node js and jspm modules/packages
+node_modules
+jspm_packages
+
+# build files
+scripts/.bundle-info

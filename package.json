@@ -1,0 +1,40 @@
+{
+  "name": "trinity_js_skeleton",
+  "version": "0.0.1",
+  "description": "Skeleton for trinity js microframework projects",
+  "main": "main.js",
+  "scripts": {
+    "controllers": "nodejs ./scripts/buildControllers.js",
+    "build": "nodejs ./scripts/buildControllers.js && jspm bundle-sfx app/main.js ./necktie.bundle.min.js --minify",
+    "build-babel": "jspm bundle babel ./bundles/babel.bundle.min.js --inject --minify",
+    "build-trinity": "jspm bundle trinity - lodash ./bundles/trinity.bundle.js --inject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/modpreneur/trinityJS-skeleton.git"
+  },
+  "keywords": [
+    "ES6",
+    "jspm",
+    "framework",
+    "MPA"
+  ],
+  "author": "Nialaren",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/modpreneur/trinityJS-skeleton/issues"
+  },
+  "homepage": "https://github.com/modpreneur/trinityJS-skeleton#readme",
+  "comment-devDependecies": "You need to have installed jspm globally - docker will install it automacally. It CANNOT be defined in devDependecies locally.",
+  "jspm": {
+    "dependencies": {
+      "lodash": "npm:lodash@^3.10.1",
+      "trinity": "github:modpreneur/trinityJS@master"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  }
+}

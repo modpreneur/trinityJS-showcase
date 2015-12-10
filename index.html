@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TrinityJS skeleton template</title>
+</head>
+<body>
+    <h1>Welcome to trinityJS!</h1>
+    <div id="content"></div>
+    <p id="bundleText">
+        Loading...
+    </p>
+
+    <!--trinityJS for development import-->
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+    <script src="bundles/babel.bundle.min.js"></script>
+    <!--Uncomment following two scripts imports to see faster loading-->
+
+    <!--<script src="bundles/trinity.bundle.js"></script>-->
+    <!--<script type="application/javascript">-->
+        <!--// Source config-->
+        <!--System.bundles['bundles/trinity.bundle.js'] = [-->
+            <!--"github:modpreneur/trinityJS@master",-->
+            <!--"github:modpreneur/trinityJS@master/trinity",-->
+            <!--"github:modpreneur/trinityJS@master/App",-->
+            <!--"github:modpreneur/trinityJS@master/Controller",-->
+            <!--"github:modpreneur/trinityJS@master/Services",-->
+            <!--"github:modpreneur/trinityJS@master/Router",-->
+            <!--"github:modpreneur/trinityJS@master/Store",-->
+            <!--"github:modpreneur/trinityJS@master/Gateway",-->
+            <!--"github:modpreneur/trinityJS@master/TrinityForm",-->
+            <!--"github:modpreneur/trinityJS@master/TrinityTab",-->
+            <!--"github:modpreneur/trinityJS@master/Collection",-->
+            <!--"github:modpreneur/trinityJS@master/utils/Xhr",-->
+            <!--"github:modpreneur/trinityJS@master/utils/closureEvents",-->
+            <!--"github:modpreneur/trinityJS@master/utils/Dom",-->
+            <!--"github:modpreneur/trinityJS@master/utils/classlist"-->
+        <!--];-->
+        <!--window.uncomented = true;-->
+    <!--</script>-->
+
+    <script type="text/javascript">
+        System.import("app/mainDev.js").catch(function (e) {
+            console.error(e);
+        });
+    </script>
+</body>
+</html>
