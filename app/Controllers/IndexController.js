@@ -17,12 +17,14 @@ export default class IndexController extends Controller {
 
         let bundleText = document.getElementById('bundleText');
         if(window.uncomented){
-            bundleText.innerHTML = "Congratulation! as you can see your application is loading faster\n" +
-                "This is because whole trinity framework is bundled inside one file - less requests => more speed\n" +
-                "Uncommented code defines what files are included inside trinity.bundle file.\n" +
-                "However, writing it this way sucks, so remove inline scripting (second uncomented script tag),\n" +
-                "and look into config.js file - uncomment same code there and viola, it works just as fine.\n" +
-                "For more information about bundling please visit following url about " +
+            bundleText.innerHTML =
+                "Congratulation! as you can see your application is loading faster" +
+                "<br>This is because whole trinity framework is bundled inside one file - less requests => more speed" +
+                "<br>Uncommented code defines what files are included inside trinity.bundle file." +
+                "<br>However, writing it this way sucks. Look into <b>config.js</b> file, into bundles property." +
+                "<br>You can see same bundle prepared, but its empty, copy content from <b>index.html</b> and comment" +
+                "<br>back second script tag. Viola, it works just fine!" +
+                "<br>For more information about bundling please visit following url about " +
                 "<a href='https://github.com/jspm/jspm-cli/blob/master/docs/getting-started.md'>jspm</a>"
         } else {
             bundleText.innerHTML = "LOADED!\n " +

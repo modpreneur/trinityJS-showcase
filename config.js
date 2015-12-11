@@ -15,24 +15,8 @@ System.config({
       "npm:babel-core@5.8.34",
       "npm:babel-core@5.8.34/browser"
     ]
-    //,
-    //"bundles/trinity.bundle.js": [
-    //  "github:modpreneur/trinityJS@master",
-    //  "github:modpreneur/trinityJS@master/trinity",
-    //  "github:modpreneur/trinityJS@master/App",
-    //  "github:modpreneur/trinityJS@master/Controller",
-    //  "github:modpreneur/trinityJS@master/Services",
-    //  "github:modpreneur/trinityJS@master/Router",
-    //  "github:modpreneur/trinityJS@master/Store",
-    //  "github:modpreneur/trinityJS@master/Gateway",
-    //  "github:modpreneur/trinityJS@master/TrinityForm",
-    //  "github:modpreneur/trinityJS@master/TrinityTab",
-    //  "github:modpreneur/trinityJS@master/Collection",
-    //  "github:modpreneur/trinityJS@master/utils/Xhr",
-    //  "github:modpreneur/trinityJS@master/utils/closureEvents",
-    //  "github:modpreneur/trinityJS@master/utils/Dom",
-    //  "github:modpreneur/trinityJS@master/utils/classlist"
-    //]
+    ,
+    "bundles/trinity.bundle.js": []
   },
 
   map: {
