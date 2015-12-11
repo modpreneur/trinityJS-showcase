@@ -6,6 +6,7 @@ import TrinityApp from 'trinity/App';
 
 let settings = {
     environment: 'dev',
+    controllersPath:'app/Controllers',
     debug: true
 };
 
@@ -29,7 +30,7 @@ let App = new TrinityApp(routes, null, settings);
  * @param successCallback {Function} optional success callback
  * @param errorCallback {Function} optional error callback
  */
-App.devStart('app/Controllers',
+App.start(
     function successCallback(isRoute){
         console.log('App Loaded!');
         if(!isRoute){

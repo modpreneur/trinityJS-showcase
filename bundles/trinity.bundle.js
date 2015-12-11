@@ -267,7 +267,8 @@ System.register('github:modpreneur/trinityJS@master/App', ['npm:lodash@3.10.1', 
         }],
         execute: function () {
             defaultSettings = {
-                environment: 'production'
+                environment: 'production',
+                controllersPath: '/'
             };
 
             /**
@@ -287,15 +288,36 @@ System.register('github:modpreneur/trinityJS@master/App', ['npm:lodash@3.10.1', 
                     Object.defineProperty(this, '$scope', {
                         value: {}
                     });
+                    //Settings
+                    if (this.isDevEnvironment()) {
+                        System['import']('trinity/devTools');
+                    }
                 }
 
                 /**
-                 * just testing update
-                 * Kick it up
+                 * Kick up application
+                 * @param [successCallback] {Function} optional success callback
+                 * @param [errorCallback] {Function} optional error callback
+                 * @returns {boolean}
                  */
                 babelHelpers.createClass(App, [{
                     key: 'start',
-                    value: function start() {
+                    value: function start(successCallback, errorCallback) {
+                        if (this.isDevEnvironment()) {
+                            return this.__devStart(successCallback, errorCallback);
+                        } else {
+                            return this.__prodStart();
+                        }
+                    }
+
+                    /**
+                     * Kick up production application
+                     * @returns {boolean}
+                     * @private
+                     */
+                }, {
+                    key: '__prodStart',
+                    value: function __prodStart() {
                         var controller = this.router.findController();
                         if (_.isNull(controller)) {
                             return false;
@@ -329,9 +351,18 @@ System.register('github:modpreneur/trinityJS@master/App', ['npm:lodash@3.10.1', 
                         }
                         return true;
                     }
+
+                    /**
+                     * Kick up development application
+                     * @param successCallback {Function} optional success callback
+                     * @param errorCallback {Function} optional error callback
+                     * @returns {boolean}
+                     * @private
+                     */
                 }, {
-                    key: 'devStart',
-                    value: function devStart(path, successCallback, errorCallback) {
+                    key: '__devStart',
+                    value: function __devStart(successCallback, errorCallback) {
+                        var path = this.settings.controllersPath;
                         var controller = this.router.findController();
                         if (_.isNull(controller)) {
                             if (successCallback) {
@@ -352,9 +383,9 @@ System.register('github:modpreneur/trinityJS@master/App', ['npm:lodash@3.10.1', 
                         var name = controllerInfo[0] + 'Controller',
                             action = controllerInfo[1] + 'Action' || 'indexAction';
                         var self = this;
-                        System['import'](path + '/' + name + '.js').then(function (controler) {
+                        System['import'](path + '/' + name + '.js').then(function (controller) {
                             /** Create and Set up controller instance **/
-                            var instance = new controler['default']();
+                            var instance = new controller['default']();
                             if (!(instance instanceof Controller)) {
                                 var err = new Error(name + ' does not inherit from "Controller" class!');
                                 if (errorCallback) {
@@ -389,9 +420,30 @@ System.register('github:modpreneur/trinityJS@master/App', ['npm:lodash@3.10.1', 
                     }
 
                     /**
+                     * Kick up application
+                     * @deprecated use start() instead and define path in settings as "controllersPath"
+                     * @param path {String} where to look for controller
+                     *  - used for async lazy load of controller file described in routes array
+                     * @param successCallback {Function} optional success callback
+                     * @param errorCallback {Function} optional error callback
+                     * @returns {boolean}
+                     */
+                }, {
+                    key: 'devStart',
+                    value: function devStart(path, successCallback, errorCallback) {
+                        this.settings.controllersPath = path;
+                        return this.__devStart(successCallback, errorCallback);
+                    }
+
+                    /**
                      * Getter for environment
                      * @returns {string|*|string}
                      */
+                }, {
+                    key: 'isDevEnvironment',
+                    value: function isDevEnvironment() {
+                        return this.environment === 'dev' || this.environment === 'development';
+                    }
                 }, {
                     key: 'environment',
                     get: function get() {
@@ -2772,9 +2824,28 @@ System.register('github:modpreneur/trinityJS@master/TrinityForm', ['npm:lodash@3
     var _, Gateway, events, Dom, Store, messageService, TrinityForm, nameRegExp;
 
     /**
+     * Default icons
+     * @deprecated - removed
+     * @static
+     */
+    //TrinityForm.tiecons = {
+    //    loading:_createIcon({
+    //        'class' : 'tiecons tiecons-loading tiecons-rotate font-20',
+    //        'style' : 'color:#530e6d;'
+    //    }),
+    //    ok:_createIcon({
+    //        'class' : 'tiecons tiecons-check font-20',
+    //        'style' : 'color:#39b54a;'
+    //    }),
+    //    error:_createIcon({
+    //        'class' : 'tiecons tiecons-cross-radius font-20',
+    //        'style' : 'color: rgb(121, 0, 0);'
+    //    })
+    //};
+
+    /**
      * Initialize TrinityForm
      * @param form
-     * @param type
      * @private
      */
     function _initialize(form) {
@@ -3267,7 +3338,7 @@ System.register('github:modpreneur/trinityJS@master/TrinityForm', ['npm:lodash@3
                 }, {
                     key: 'removeButtonIcon',
                     value: function removeButtonIcon() {
-                        _removeIconWrapper(this.activeBtn ? this.activeBtn : this.buttons[0]);
+                        _removeIconWrapper(this.activeBtn || this.buttons[0]);
                     }
                 }]);
                 return TrinityForm;
@@ -3287,25 +3358,6 @@ System.register('github:modpreneur/trinityJS@master/TrinityForm', ['npm:lodash@3
              */
             TrinityForm.settings = {
                 debug: false
-            };
-
-            /**
-             * Default icons
-             * @static
-             */
-            TrinityForm.tiecons = {
-                loading: _createIcon({
-                    'class': 'tiecons tiecons-loading tiecons-rotate font-20',
-                    'style': 'color:#530e6d;'
-                }),
-                ok: _createIcon({
-                    'class': 'tiecons tiecons-check font-20',
-                    'style': 'color:#39b54a;'
-                }),
-                error: _createIcon({
-                    'class': 'tiecons tiecons-cross-radius font-20',
-                    'style': 'color: rgb(121, 0, 0);'
-                })
             };nameRegExp = /\w+/g;
         }
     };

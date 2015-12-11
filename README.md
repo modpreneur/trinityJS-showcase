@@ -1,4 +1,20 @@
 # trinityJS-skeleton
 Skeleton for trinityJS microframework
 
-If running your application returning error for loading files, please open config.js file and specify valid baseUrl
+### Run
+```
+    jspm install
+```
+
+And just open `index.html`
+
+### Note
+If running your application returning error for loading files, please open `config.js` file and specify valid baseUrl
+
+```
+    System.config({
+      baseURL: "/trinityJS-skeleton/",
+      defaultJSExtensions: true,
+      ...
+    )};
+```
