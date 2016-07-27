@@ -1,14 +1,8 @@
-import externalHelpers from 'babel/external-helpers'; // Important for correct babel translation
-import 'trinity/devTools'; // important for correct behaviour of trinity components in dev
+'use strict';
+
 import routes from './routes.js';
-import TrinityApp from 'trinity/App';
-
-
-let settings = {
-    environment: 'dev',
-    controllersPath:'app/Controllers',
-    debug: true
-};
+import controllers from './controllers.js';
+import App from 'trinity/App';
 
 // Create App
 /**
@@ -19,7 +13,10 @@ let settings = {
  *  - Not necessary in development environment
  * @param settings {Object} describes basic application settings
  */
-let App = new TrinityApp(routes, null, settings);
+let myApp = new App(routes, controllers, {
+    env: 'dev',
+    globalController: 'Global'
+});
 
 // Start App
 /**
@@ -30,13 +27,11 @@ let App = new TrinityApp(routes, null, settings);
  * @param successCallback {Function} optional success callback
  * @param errorCallback {Function} optional error callback
  */
-App.start(
-    function successCallback(isRoute){
-        console.log('App Loaded!');
-        if(!isRoute){
-            console.log('INFO: This route doesn\'t have any controller!');
-        }
+myApp.start(
+    function successCallback(activeController){
+        // Nothing to do
     }, function errorCallback(error){
+        // ERROR?
         console.error(error);
     }
 );

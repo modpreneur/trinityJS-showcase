@@ -1,64 +1,82 @@
 /**
  * Created by fisa on 10/16/15.
  */
-var path = require('path');
-var fs = require('fs');
+'use strict';
 
-function loadDir(dirname) {
-    //var fileNames = [];
-    return fs.readdirSync(dirname).map(function(file) {
-        // exclude non `.js` files
-        if (path.extname(file).toLowerCase() !== '.js') return;
+let path = require('path');
+let fs = require('fs');
 
-        //fileNames.push(path.basename(file, path.extname(file)));
-        return {name: file.substring(0, file.indexOf('.js')), path: path.join(dirname, file)};
-    });
+let args = process.argv.splice(2);
+if(args.length === 0){
+    console.error('Missing input arguments. Please provide path to controllers directory');
+    process.exit(-1);
 }
 
-var controllers = loadDir('./app/Controllers');
+let controllersDir = args[0],
+    output = args[1] || './controllers.js';
 
-fs.open('./app/controllers.js','w+', function(err, fd){
+if(!fs.existsSync(controllersDir)){
+    console.error('\"' + controllersDir + '\" directory does not exists!');
+    process.exit(-1)
+}
+
+console.log('Building Controllers...');
+
+let controllers = loadDir(controllersDir, output);
+
+fs.open(output, 'w+', function(err, fd){
     if(err){
         console.error('ERROR', err);
-        return false;
+        process.exit(-1);
     }
-    //Controllers import
-    var controllersImports = new Array(controllers.length);
-    var controllersInArray = new Array(controllers.length);
+    console.log(controllersDir, '->', output);
 
-    for(var index=0; index<controllers.length; index++){
-        controllersImports[index] = ['import', controllers[index].name, 'from \"' + controllers[index].path + '\";\n'].join(' ');
-        controllersInArray[index] = ['\"', controllers[index].name, '\":', controllers[index].name, ''].join('');
-    }
 
-    var buffer = controllersImports.join(''),
-        arrayBuffer = 'var controllers = {' + controllersInArray.join(',') + '};',
-        offset = 0;
+    let controllerRequires = controllers.map((c)=>{
+        return `${c.name}:require('${c.path}').default`;
+    });
 
+    let outputString = (
+        '\'use strict\';\n'
+        + 'module.exports = {\n'
+        + '\t'+controllerRequires.join(',\n\t')+'\n'
+        + '};'
+    ).trim();
+
+    let offset = 0;
+
+    console.log(outputString);
     try {
-        // write imports
-        offset += fs.writeSync(fd, buffer, offset, buffer.length);
-        //Create array
-        offset += fs.writeSync(fd, arrayBuffer, offset, arrayBuffer.length);
+        offset+= fs.writeSync(fd, outputString, offset, outputString.length);
     } catch(e){
         console.error('Write to file failed while writing imports, error:', e);
-        return false;
+        process.exit(-1);
     }
 
-    //Export
-    var exportLine = '\nexport default controllers;';
     try {
-        offset += fs.writeSync(fd,exportLine,offset,exportLine.length);
+        fs.closeSync(fd);
+        console.log('done');
     } catch(e){
-        console.error('ERROR while writing to file - executing exportLine, error:', e);
-        return false;
-    }
-    try {
-        fs.closeSync(fd)
-    } catch(e){
-        console.error('ERROR while closing file')
+        console.error('ERROR while closing file');
     }
 });
 
+/**
+ * Loads dir and prepare controllers object
+ * @param dirName {string}
+ * @param outputFile {string}
+ * @returns {*}
+ */
+function loadDir(dirName, outputFile) {
+    return fs.readdirSync(dirName).filter((file)=>{
+        // exclude non `.js` files
+        return path.extname(file).toLowerCase().indexOf('.js') !== -1;
+    }).map((file)=>{
+        return {
+            name: file.substring(0, file.indexOf('.js')),
+            path: './' + path.relative(path.dirname(outputFile), path.join(dirName, file))
+        };
+    });
+}
 
 

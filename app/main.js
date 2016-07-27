@@ -1,12 +1,8 @@
+'use strict';
+
 import routes from './routes.js';
 import controllers from './controllers.js';
-import TrinityApp from 'trinity/App';
-
-
-let settings = {
-    environment: 'production',
-    debug: false
-};
+import App from 'trinity/App';
 
 // Create App
 /**
@@ -17,7 +13,7 @@ let settings = {
  *  - Not necessary in development environment
  * @param settings {Object} describes basic application settings
  */
-let App = new TrinityApp(routes, controllers, settings);
+let myApp = new App(routes, controllers, {});
 
 // Start App
 /**
@@ -25,4 +21,11 @@ let App = new TrinityApp(routes, controllers, settings);
  *  - Kick up application
  * No other parameters needs to be defined
  */
-App.start();
+myApp.start(
+    function successCallback(smt){
+        console.log('START', smt)
+    },
+    function errorCallback(error){
+        console.error(error);
+    }
+);

@@ -25,6 +25,14 @@
  */
 export default [
     {
+        path: '/admin(/)',
+        action: 'Admin'
+    },
+    {
+        path: '/form(/)',
+        action: 'Index.form'
+    },
+    {
         path: '(/)',
         action: 'Index.index'
     }
