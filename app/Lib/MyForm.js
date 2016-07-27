@@ -1,5 +1,6 @@
 'use strict';
 
+import _ from 'lodash';
 import TrinityForm from 'trinity/components/TrinityForm';
 import {messageService} from 'trinity/Services';
 
@@ -17,14 +18,16 @@ export default class MyForm extends TrinityForm {
         }
     }
 
-    __handleSuccessResponse(response){
+    __handleSuccessResponse(e){
+        let response = e.data;
         // Do something with response
         if(DEVELOPMENT){
             console.log('Success', response);
         }
     }
 
-    __handleErrorResponse(error){
+    __handleErrorResponse(e){
+        let error = e.data;
         if(DEVELOPMENT){
             console.error('ERROR', error);
             console.log(error.response);
@@ -81,5 +84,37 @@ export default class MyForm extends TrinityForm {
         if(noErrors && DEVELOPMENT){
             messageService('DEBUG: Request failed but no FORM errors returned! check server response', 'warning');
         }
+    }
+}
+
+
+/**
+ * Handles global errors
+ * @param errors
+ * @private
+ */
+function __globalErrors(errors){
+    let errLength = errors.length;
+    for(let i=0; i< errLength; i++){
+        if(errors[i].indexOf("The CSRF token is invalid") > -1) {
+            messageService("Something get wrong, please refresh page.", 'warning');
+        }else {
+            messageService(errors[i], 'warning');
+        }
+    }
+}
+
+/**
+ * Handles Field Errors - adds them to form
+ * @param fields
+ * @private
+ */
+function __fieldErrors(fields){
+    let keys = Object.keys(fields),
+        keysLength = keys.length;
+
+    for(let i=0; i<keysLength; i++){
+        let k = keys[i];
+        this.addError(k, fields[k], document.getElementById(k));
     }
 }

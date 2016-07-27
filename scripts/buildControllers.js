@@ -70,8 +70,8 @@ fs.open(output, 'w+', function(err, fd){
  */
 function loadDir(dirName, outputFile) {
     return fs.readdirSync(dirName).filter((file)=>{
-        // exclude non `.js` files
-        return path.extname(file).toLowerCase().indexOf('.js') !== -1;
+        // exclude non `.js` files. "~" means "indexOf('.js') !== -1";
+        return ~(path.extname(file).toLowerCase().indexOf('.js'));
     }).map((file)=>{
         return {
             name: file.substring(0, file.indexOf('.js')),
