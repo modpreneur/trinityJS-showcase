@@ -17,9 +17,9 @@ let myApp = new App(routes, controllers, {});
 
 // Start App
 /**
- * App.start() method
- *  - Kick up application
- * No other parameters needs to be defined
+ * Kick it up!
+ * @param successCallback {Function} optional success callback
+ * @param errorCallback {Function} optional error callback
  */
 myApp.start(
     function successCallback(smt){

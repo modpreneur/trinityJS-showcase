@@ -1,8 +1,16 @@
 'use strict';
 
+import $ from 'jquery';
+import _ from 'lodash';
 import routes from './routes.js';
 import controllers from './controllers.js';
 import App from 'trinity/App';
+
+// Extends jquery
+$.id = document.getElementById.bind(document);
+// Externals for debug
+window.$ = $;
+window._ = _;
 
 // Create App
 /**
@@ -20,10 +28,7 @@ let myApp = new App(routes, controllers, {
 
 // Start App
 /**
- * App.devStart(path, successCallback, errorCallback) method
- *  - Kick up application
- * @param path {String} where to look for controller
- *  - used for async lazy load of controller file described in routes array
+ * Kick it up!
  * @param successCallback {Function} optional success callback
  * @param errorCallback {Function} optional error callback
  */

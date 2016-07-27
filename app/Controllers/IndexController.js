@@ -1,6 +1,7 @@
 'use strict';
 
 import Controller from 'trinity/Controller';
+import MyForm from '../Lib/MyForm';
 
 export default class IndexController extends Controller {
     indexAction($scope){
@@ -8,6 +9,10 @@ export default class IndexController extends Controller {
     }
 
     formAction($scope){
+        let testForm = new MyForm($scope['test-form']);
+
+        console.log(testForm);
+
         //let tt = new TrinityForm($scope['test-form']);
         //tt.success(function(res){
         //    console.log(res);

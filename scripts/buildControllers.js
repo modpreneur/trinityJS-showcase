@@ -15,9 +15,11 @@ if(args.length === 0){
 let controllersDir = args[0],
     output = args[1] || './controllers.js';
 
-if(!fs.existsSync(controllersDir)){
+try {
+    fs.accessSync(controllersDir);
+} catch(e) {
     console.error('\"' + controllersDir + '\" directory does not exists!');
-    process.exit(-1)
+    process.exit(-1);
 }
 
 console.log('Building Controllers...');
@@ -29,8 +31,6 @@ fs.open(output, 'w+', function(err, fd){
         console.error('ERROR', err);
         process.exit(-1);
     }
-    console.log(controllersDir, '->', output);
-
 
     let controllerRequires = controllers.map((c)=>{
         return `${c.name}:require('${c.path}').default`;
@@ -45,7 +45,7 @@ fs.open(output, 'w+', function(err, fd){
 
     let offset = 0;
 
-    console.log(outputString);
+    console.log('output:\n', outputString);
     try {
         offset+= fs.writeSync(fd, outputString, offset, outputString.length);
     } catch(e){
@@ -55,6 +55,7 @@ fs.open(output, 'w+', function(err, fd){
 
     try {
         fs.closeSync(fd);
+        console.log(controllersDir, '->', output);
         console.log('done');
     } catch(e){
         console.error('ERROR while closing file');
