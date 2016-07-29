@@ -69,7 +69,7 @@ module.exports = {
             sourceMap: true,
             comments: false
         }),
-        new ExtractTextPlugin('../css/necktie.styles.min.css', {
+        new ExtractTextPlugin('../css/app.styles.min.css', {
             allChunks: true
         }),
 

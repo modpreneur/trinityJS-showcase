@@ -21,18 +21,34 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public'))); // Normal static
 app.use(express.static(path.join(__dirname, '../dist'))); // Frontend compiled JS
 
+app.locals = {
+    navigation: {
+        home: {
+            label: 'Home',
+            href: '/'
+        },
+        form:{
+            label: 'Form test',
+            href: '/form'
+        },
+        admin:{
+            label: 'Administration',
+            href: '/admin'
+        }
+    }
+};
+
 /** *************************************************************************** **/
 /** Routes setup  **/
 /** GET **/
 app.get('/', (req, res)=>{
-    res.render('index');
+    res.render('index', {activeNavigation: 'home'});
 });
 app.get('/admin', (req, res)=>{
-    res.render('index');
+    res.render('index', {activeNavigation: 'admin'});
 });
 app.get('/form', (req, res)=>{
-    console.log('BODY', req.body);
-    res.render('form');
+    res.render('form', {activeNavigation: 'form'});
 });
 
 /** POST **/

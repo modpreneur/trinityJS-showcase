@@ -11,6 +11,17 @@ export default class IndexController extends Controller {
     formAction($scope){
         let testForm = new MyForm($scope['test-form']);
 
+        testForm.addError('name', {
+            isTemplate: true,
+            message: '<div style="color: red;">Name has to be at least 6 characters long.</div>',
+            validate: val => val.length > 5
+        });
+
+        testForm.addError('name', {
+            message: 'Name has to be in camel case.',
+            validate: val => val === val.toUpperCase()
+        });
+
         console.log(testForm);
 
         //let tt = new TrinityForm($scope['test-form']);

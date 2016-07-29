@@ -2,6 +2,8 @@
 
 let path = require('path');
 let webpack = require('webpack');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 
 module.exports = {
     entry: {
@@ -20,17 +22,21 @@ module.exports = {
     // devtool: 'source-map',
     module: {
         loaders: [
+            {test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff'},
+            {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream'},
+            {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'},
+            {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'},
             {
                 test: /\.es6\.html$/,
                 loader: 'babel?presets[]=es2015!template-string'
             },
             {
                 test: /\.css$/,
-                loader: 'style!css-loader'
+                loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
             },
             {
                 test: /\.less$/,
-                loader: 'style!css-loader!less-loader'
+                loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
             },
             {
                 test:/\.json$/,
@@ -66,7 +72,10 @@ module.exports = {
         new webpack.DefinePlugin({
             DEVELOPMENT: true
         }),
-        new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js')
+        new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+        new ExtractTextPlugin('../css/app.styles.min.css', {
+            allChunks: true
+        }),
     ],
     resolve:{
         root: path.join(__dirname, '../node_modules')

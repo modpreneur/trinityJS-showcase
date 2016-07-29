@@ -5,13 +5,17 @@ html(lang="en")
             title fishJS
         link(rel="icon" href="fishtie_trans.png")
         link(rel="stylesheet" type="text/css" href="css/main.css")
+        link(rel="stylesheet" type="text/css" href="http://localhost:3001/css/app.styles.min.css")
 
     body
-        nav
-            ulw
-                li
-                    a(href="/") Home
+        nav.t-navigation
+            div.container
+                ul.nav.navbar-nav
+                    each nav, key in navigation
+                        li(class={active: key === activeNavigation})
+                            a(href=nav.href)= nav.label
 
-        block content
+        div.container
+            block content
 
         block js-assets
