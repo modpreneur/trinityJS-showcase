@@ -10,19 +10,36 @@ export default class IndexController extends Controller {
 
     formAction($scope){
         let testForm = new MyForm($scope['test-form']);
-
+        testForm.settings.errorTemplate = (msg, type, id) => {
+            return `<div id="${id}"><span>${type}</span>${msg}</div>`;
+        };
         testForm.addError('name', {
-            isTemplate: true,
+            id: 'long_name',
+            isHtml: true,
             message: '<div style="color: red;">Name has to be at least 6 characters long.</div>',
             validate: val => val.length > 5
         });
 
-        testForm.addError('name', {
-            message: 'Name has to be in camel case.',
-            validate: val => val === val.toUpperCase()
-        });
+        testForm.setMessage('name', 'testMessage');
 
-        console.log(testForm);
+        testForm.addError('name', {
+            id: 'default_message',
+            message: 'Not a tempalte'
+        }, 'error', 'default_message');
+
+        window.testForm = testForm;
+        window.removeError = (name, id) => testForm.removeError(name, id);
+        window.removeAll = (name) => testForm.removeError(name);
+        window.addError = (name, error) => testForm.addError(name, error);
+        //
+        // testForm.addError('name', {
+        //     message: 'Name has to be in camel case.',
+        //     validate: val => val === val.toUpperCase()
+        // });
+
+        // testForm.addError('name', 'Name has to be in camel case.');
+        //
+        // console.log(testForm);
 
         //let tt = new TrinityForm($scope['test-form']);
         //tt.success(function(res){
