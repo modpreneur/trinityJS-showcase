@@ -1,11 +1,27 @@
-.tab-body {
-  position: absolute;
-  opacity: 0;
-  top: -9999px;
-  padding: 15px;
-}
+
+
 
 .tabs-wrapper {
+  .tab-head + label {
+    border: solid 1px black;
+    height: initial;
+    padding: 25px;
+  }
+
+  label:first-of-type {
+    border-top-left-radius: 15%;
+  }
+  label:last-of-type {
+    border-top-right-radius: 15%;
+  }
+
+  .tab-body {
+    position: absolute;
+    opacity: 0;
+    top: -9999px;
+    padding: 15px;
+  }
+
   #tab1:checked~.tab-body-wrapper #tab-body-1,
   #tab2:checked~.tab-body-wrapper #tab-body-2,
   #tab3:checked~.tab-body-wrapper #tab-body-3,
