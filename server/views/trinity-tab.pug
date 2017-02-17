@@ -3,11 +3,17 @@ block content
     h2 Trinity Tab
 
     div.tabs-wrapper
-        input(type="radio" name="tab" id="tab1" data-alias="show" class="tab-head" checked)
+        input(type="radio" name="tab" id="tab1" data-alias="show" class="tab-head")
         label(for="tab1") Show
 
         input(type="radio" name="tab" id="tab2" data-alias="edit" class="tab-head" checked)
         label(for="tab2") Edit
+
+        input(type="radio" name="tab" id="tab3" data-alias="third" class="tab-head" checked)
+        label(for="tab3") Third
+
+        // Tab body
         div.tab-body-wrapper
             div(id="tab-body-1" class="tab-body" data-source="/trinity-tab/tab/show")
             div(id="tab-body-2" class="tab-body" data-source="/trinity-tab/tab/edit")
+            div(id="tab-body-3" class="tab-body" data-source="/trinity-tab/tab/third")

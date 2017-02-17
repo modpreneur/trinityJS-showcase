@@ -66,6 +66,10 @@ app.get('/trinity-tab/tab/edit', (req, res)=>{
     res.render('tabs/edit', { activeNavigation: 'trinityTab'});
 });
 
+app.get('/trinity-tab/tab/third', (req, res)=>{
+    res.render('tabs/third', { activeNavigation: 'trinityTab'});
+});
+
 
 /** POST **/
 app.post('/form', upload.fields([{name: 'photo'}]), (req, res)=>{
