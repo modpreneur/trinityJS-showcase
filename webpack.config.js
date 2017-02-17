@@ -10,7 +10,7 @@ console.log(process.env.NODE_ENV);
 
 let config = null;
 
-switch (process.env.NODE_ENV){
+switch (process.env.NODE_ENV.trim()){
     case 'dev':{
         config = require(path.join(__dirname, './env/dev.config.js'))
     } break;

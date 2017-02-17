@@ -1,6 +1,6 @@
 'use strict';
 
-import './styles/main.less';
+import './../server/public/styles/main.less';
 import $ from 'jquery';
 import _ from 'lodash';
 import routes from './routes.js';

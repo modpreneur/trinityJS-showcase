@@ -4,15 +4,15 @@ html(lang="en")
         block title
             title fishJS
         link(rel="icon" href="fishtie_trans.png")
-        link(rel="stylesheet" type="text/css" href="css/main.css")
-        link(rel="stylesheet" type="text/css" href="http://localhost:3001/css/app.styles.min.css")
+        //link(rel="stylesheet" type="text/css" href="http://localhost:3010/dist/styles.less.css")
+        link(rel="stylesheet" type="text/css" href="http://localhost:3010/dist/styles.css")
 
     body
-        nav.t-navigation
-            div.navbar-header
-                img(src="fishtie_trans.png")
-            div.container
-                ul.nav.navbar-nav
+        nav.t-navigation.green.darken-2
+            div.nav-wrapper
+                div.brand-logo
+                    | TJS
+                ul.right#nav-mobile
                     each nav, key in navigation
                         li(class={active: key === activeNavigation})
                             a(href=nav.href)= nav.label

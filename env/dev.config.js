@@ -4,6 +4,21 @@ let path = require('path');
 let webpack = require('webpack');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+let stage2Preset = require.resolve('babel-preset-stage-2');
+let reactPreset = require.resolve('babel-preset-react');
+let es2015Preset = require.resolve('babel-preset-es2015');
+
+let cssExtract = new ExtractTextPlugin('styles.css');
+
+// preparation
+let babelQuery = {
+        presets: [stage2Preset],
+        plugins: []
+    },
+    babelQueryJsx = {
+        presets: [stage2Preset, reactPreset],
+        plugins: []
+    };
 
 module.exports = {
     entry: {
@@ -14,57 +29,115 @@ module.exports = {
         ]
     },
     output: {
+        pathinfo: true,
+        publicPath: '/dist',
         path: path.join(__dirname, '../dist/js'),
         filename: '[name].bundle.js'
     },
-    // Bigger file but faster compiling
-    devtool: 'eval-cheap-module-source-map',
-    // devtool: 'source-map',
+    devtool: 'source-map',
+    devServer: {
+        // hot: true,
+        inline: true,
+        port: 3010,
+        publicPath: '/dist'
+    },
     module: {
-        loaders: [
-            {test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff'},
-            {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream'},
-            {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'},
-            {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'},
+        rules: [
+            {
+                test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+                use: [{
+                    loader:'url-loader'
+                }]
+            },
+            // {
+            //     test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+            //     use: [{
+            //             loader: 'url-loader',
+            //             options: {
+            //                 limit: 10000,
+            //                 mimetype: 'application/font-woff'
+            //             }
+            //     }]
+            // },
+            // {
+            //     test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+            //     use: [{
+            //         loader: 'url-loader',
+            //         options: {
+            //             limit: 10000,
+            //             mimetype: 'application/octet-stream'
+            //         }
+            //     }]
+            // },
+            // {
+            //     test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+            //     use: ['file-loader']
+            // },
+            // {
+            //     test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+            //     use: [{
+            //         loader: 'url-loader',
+            //         options: {
+            //             limit: 10000,
+            //             mimetype: 'img/svg+xml'
+            //         }
+            //     }]
+            // },
             {
                 test: /\.es6\.html$/,
-                loader: 'babel?presets[]=es2015!template-string'
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['es2015']
+                        }
+                    },
+                    'template-string-loader'
+                ]
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+                loader: cssExtract.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        'css-loader'
+                    ]
+                })
             },
             {
                 test: /\.less$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
+                use: cssExtract.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        'css-loader',
+                        'less-loader',
+                    ]
+                })
             },
             {
                 test:/\.json$/,
-                exclude: /(node_modules)/,
-                loader: 'json'
+                exclude: [/(node_modules)/],
+                use: [
+                    'json-loader'
+                ]
             },
             {
                 test: /\.jsx$/,
                 exclude: /(node_modules)/,
-                loader: 'babel',
-                query: {
-                    presets: [
-                        'es2015',
-                        'react',
-                        'stage-2'
-                    ]
-                }
+                use: [{
+                    loader: 'babel-loader',
+                    options: babelQueryJsx
+                }]
             },
             {
                 test: /\.js$/,
-                exclude: [/(node_modules)/],
-                loader: 'babel',
-                query: {
-                    presets: [
-                        require.resolve('babel-preset-es2015'),
-                        require.resolve('babel-preset-stage-2')
-                    ]
-                }
+                exclude: [/(node_modules)/,/(query-builder)/,/(froala)/],
+                // exclude: [/(node_modules)(?!\/trinity\/)/,/(query-builder)/,/(froala)/],
+                use: [{
+                    loader: 'babel-loader',
+                    options: babelQuery
+                }]
+
             }
         ]
     },
@@ -72,15 +145,11 @@ module.exports = {
         new webpack.DefinePlugin({
             DEVELOPMENT: true
         }),
-        new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
-        new ExtractTextPlugin('../css/app.styles.min.css', {
-            allChunks: true
-        }),
+        cssExtract,
+        new webpack.optimize.CommonsChunkPlugin({name: 'vendor', file: 'vendor.bundle.js'})
     ],
     resolve:{
-        root: path.join(__dirname, '../node_modules')
-    },
-    resolveLoader: {
-        root: path.join(__dirname, '../node_modules')
+        mainFields: ['browser', 'module', 'main'],
+        modules: ['node_modules']
     }
 };

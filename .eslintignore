@@ -1,0 +1,10 @@
+dist
+dist/*
+scripts
+scripts/*
+env
+env/*
+node_modules
+node_modules/*
+webpack.config.js
+app/controllers.js
