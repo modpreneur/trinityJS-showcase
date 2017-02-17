@@ -2,5 +2,6 @@
 module.exports = {
 	AdminController:require('./Controllers/AdminController.js').default,
 	GlobalController:require('./Controllers/GlobalController.js').default,
-	IndexController:require('./Controllers/IndexController.js').default
+	IndexController:require('./Controllers/IndexController.js').default,
+	TrinityTabController:require('./Controllers/TrinityTabController.js').default
 };

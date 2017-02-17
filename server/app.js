@@ -34,6 +34,10 @@ app.locals = {
         admin:{
             label: 'Administration',
             href: '/admin'
+        },
+        trinityTab: {
+            label: 'Trinity Tab',
+            href: '/trinity-tab'
         }
     }
 };
@@ -42,14 +46,26 @@ app.locals = {
 /** Routes setup  **/
 /** GET **/
 app.get('/', (req, res)=>{
-    res.render('index', {activeNavigation: 'home'});
+    res.render('index', { activeNavigation: 'home'});
 });
 app.get('/admin', (req, res)=>{
-    res.render('index', {activeNavigation: 'admin'});
+    res.render('index', { activeNavigation: 'admin'});
 });
 app.get('/form', (req, res)=>{
-    res.render('form', {activeNavigation: 'form'});
+    res.render('form', { activeNavigation: 'form'});
 });
+app.get('/trinity-tab', (req, res)=>{
+    res.render('trinity-tab', { activeNavigation: 'trinityTab'});
+});
+
+app.get('/trinity-tab/tab/show', (req, res)=>{
+    res.render('tabs/show');
+});
+
+app.get('/trinity-tab/tab/edit', (req, res)=>{
+    res.render('tabs/edit', { activeNavigation: 'trinityTab'});
+});
+
 
 /** POST **/
 app.post('/form', upload.fields([{name: 'photo'}]), (req, res)=>{

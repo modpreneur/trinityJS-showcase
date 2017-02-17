@@ -25,6 +25,10 @@
  */
 export default [
     {
+        path: '/trinity-tab(/)',
+        action: 'TrinityTab.index'
+    },
+    {
         path: '/admin(/)',
         action: 'Admin'
     },
@@ -35,5 +39,6 @@ export default [
     {
         path: '(/)',
         action: 'Index.index'
-    }
+    },
+
 ]
