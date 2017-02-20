@@ -13,17 +13,16 @@ export default class TrinityTabController extends Controller {
 
         let tab = new TrinityTab($('.tab-head'), {
             [SHOW_TAB] : {
-                onLoad: (...params) => {
-                    console.log('onLoad function called', params)
+                onLoad: (tab) => {
+                    console.log('onLoad function called', tab)
                 },
-                onActive: (...params) => {
-                    console.log('onActive called', params);
+                onActive: (tab, prevTabId) => {
+                    console.log(`onActive called. Active tab: ${tab.id}, previous tab: ${prevTabId}`);
                 },
-                onDelete: (...params) => {
-                    console.log('onDelete called', params);
+                onDelete: (tab, forced) => {
+                    console.log(`onDelete called for tab: ${tab.id} with forced flag: ${forced}`);
                 }
             }
         });
-        console.log(tab);
     }
 }
