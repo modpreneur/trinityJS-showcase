@@ -1,20 +1,42 @@
 extends layout.pug
 block content
     h2 Trinity Form
-    form(data-ng-scope="test-form" action="/form" method="post")
-        div
-            label(for="test-form-name") Name: &nbsp;
-            input(id="test-form-name" type="text" name="name")
-        div
-            label(for="test-form-photo") Photo:
-            input(id="test-form-photo" type="file" name="photo" multiple)
-        div
-            select(name="test-form-select")
-                option(value=1) 'test'
-                option(value=2) 'test2'
-        div
-            button(type="submit") Submit
-    h2 File test
-    div
-        input(data-ng-scope="testFile" type="file")
-        button(data-ng-scope="sendFileBtn") Send file
+    .row
+        form(data-ng-scope="test-form" action="/form" method="post")
+            div.row
+                div.input-field
+                    label(for="test-form-name") Name:
+                    input(id="test-form-name" type="text" name="name")
+            //div
+            //    label(for="test-form-photo") Photo:
+            //    input(id="test-form-photo" type="file" name="photo" multiple)
+            div.row
+                div.input-field
+                    select(name="test-form-select").browser-default
+                        option(value=1) 'test'
+                        option(value=2) 'test2'
+
+            div.row
+                p
+                    input(type="checkbox", id="One" value=1)
+                    label(for="One") One
+                p
+                    input(type="checkbox", id="Two" value=2)
+                    label(for="Two") Two
+                p
+                    input(type="checkbox", id="Three" value=3)
+                    label(for="Three") Three
+
+            div.row
+                p
+                    input(type="radio", id="OneR" name="g1" value=1)
+                    label(for="OneR") One
+                p
+                    input(type="radio", id="TwoR" name="g1" value=2)
+                    label(for="TwoR") Two
+                p
+                    input(type="radio", id="ThreeR" name="g1" value=3)
+                    label(for="ThreeR") Three
+            div.row
+                div.input-field
+                    button.btn(type="submit") Submit

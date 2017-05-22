@@ -6,7 +6,6 @@ let ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 let stage2Preset = require.resolve('babel-preset-stage-2');
 let reactPreset = require.resolve('babel-preset-react');
-let es2015Preset = require.resolve('babel-preset-es2015');
 
 let cssExtract = new ExtractTextPlugin('styles.css');
 
@@ -22,7 +21,7 @@ let babelQuery = {
 
 module.exports = {
     entry: {
-        app: path.join(__dirname, '../app/mainDev.js'),
+        app: path.join(__dirname, '../app/main.js'),
         vendor: [
             'lodash',
             'jquery'
