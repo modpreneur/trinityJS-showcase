@@ -6,15 +6,21 @@ block content
             div.row
                 div.input-field
                     label(for="test-form-name") Name:
-                    input(id="test-form-name" type="text" name="name")
+                    input(id="test-form-name" type="text" name="name" required class="validate")
+
+            div.row
+                div.input-field
+                    input(id="test-form-email" type="email" name="email" required class="validate" )
+                    label(for="test-form-email" data-error="test message") Email:
+            //        TODO: Somehow create feature to specify where to put messages
             //div
             //    label(for="test-form-photo") Photo:
             //    input(id="test-form-photo" type="file" name="photo" multiple)
             div.row
                 div.input-field
                     select(name="test-form-select").browser-default
-                        option(value=1) 'test'
-                        option(value=2) 'test2'
+                        option(value=1) test
+                        option(value=2) test2
 
             div.row
                 p

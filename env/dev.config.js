@@ -1,11 +1,11 @@
 'use strict';
 
-let path = require('path');
-let webpack = require('webpack');
-let ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-let stage2Preset = require.resolve('babel-preset-stage-2');
-let reactPreset = require.resolve('babel-preset-react');
+const stage2Preset = require.resolve('babel-preset-stage-2');
+const reactPreset = require.resolve('babel-preset-react');
 
 let cssExtract = new ExtractTextPlugin('styles.css');
 
@@ -48,40 +48,6 @@ module.exports = {
                     loader:'url-loader'
                 }]
             },
-            // {
-            //     test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-            //     use: [{
-            //             loader: 'url-loader',
-            //             options: {
-            //                 limit: 10000,
-            //                 mimetype: 'application/font-woff'
-            //             }
-            //     }]
-            // },
-            // {
-            //     test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-            //     use: [{
-            //         loader: 'url-loader',
-            //         options: {
-            //             limit: 10000,
-            //             mimetype: 'application/octet-stream'
-            //         }
-            //     }]
-            // },
-            // {
-            //     test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-            //     use: ['file-loader']
-            // },
-            // {
-            //     test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-            //     use: [{
-            //         loader: 'url-loader',
-            //         options: {
-            //             limit: 10000,
-            //             mimetype: 'img/svg+xml'
-            //         }
-            //     }]
-            // },
             {
                 test: /\.es6\.html$/,
                 use: [
@@ -130,7 +96,7 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                exclude: [/(node_modules)/,/(query-builder)/,/(froala)/],
+                exclude: [/(node_modules)/,/(query-builder)/],
                 // exclude: [/(node_modules)(?!\/trinity\/)/,/(query-builder)/,/(froala)/],
                 use: [{
                     loader: 'babel-loader',

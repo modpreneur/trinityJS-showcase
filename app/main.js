@@ -8,6 +8,7 @@ import routes from './routes.js';
 import controllers from './controllers.js';
 import bootstrap from './bootstrap';
 import App from 'trinity/App';
+import Gateway from 'trinity/Gateway';
 
 // Extends jquery
 $.id = document.getElementById.bind(document);
@@ -49,4 +50,4 @@ myApp.start(
 
 // Export app for debug purposes
 window.App = App;
-
+window.Gateway = Gateway;

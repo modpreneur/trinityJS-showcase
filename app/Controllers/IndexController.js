@@ -13,19 +13,19 @@ export default class IndexController extends Controller {
         testForm.settings.errorTemplate = (msg, type, id) => {
             return `<div id="${id}"><span>${type}</span>${msg}</div>`;
         };
-        testForm.addError('name', {
-            id: 'long_name',
-            isHtml: true,
-            message: '<div style="color: red;">Name has to be at least 6 characters long.</div>',
-            validate: val => val.length > 5
-        });
+        // testForm.addError('name', {
+        //     id: 'long_name',
+        //     isHtml: true,
+        //     message: '<div style="color: red;">Name has to be at least 6 characters long.</div>',
+        //     validate: val => val.length > 5
+        // });
 
         testForm.setMessage('name', 'testMessage');
 
-        testForm.addError('name', {
-            id: 'default_message',
-            message: 'Not a tempalte'
-        }, 'error', 'default_message');
+        // testForm.addError('name', {
+        //     id: 'default_message',
+        //     message: 'Not a tempalte'
+        // }, 'error', 'default_message');
 
         window.testForm = testForm;
         window.removeError = (name, id) => testForm.removeError(name, id);
