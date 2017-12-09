@@ -38,6 +38,10 @@ app.locals = {
         trinityTab: {
             label: 'Trinity Tab',
             href: '/trinity-tab'
+        },
+        nested: {
+            label: 'Nested',
+            href: '/nested'
         }
     }
 };
@@ -69,6 +73,23 @@ app.get('/trinity-tab/tab/edit', (req, res)=>{
 app.get('/trinity-tab/tab/third', (req, res)=>{
     res.render('tabs/third', { activeNavigation: 'trinityTab'});
 });
+
+app.get('/nested', (req, res)=>{
+    res.render('nested', { activeNavigation: 'nested'});
+});
+
+app.get('/nested/first', (req, res)=>{
+    res.render('nested/index', { activeNavigation: 'nested',  name: 'first'});
+});
+
+app.get('/nested/second', (req, res)=>{
+    res.render('nested/index', { activeNavigation: 'nested', name: 'second'});
+});
+
+app.get('/nested/third', (req, res)=>{
+    res.render('nested/index', { activeNavigation: 'nested', name: 'third'});
+});
+
 
 
 /** POST **/

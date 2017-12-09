@@ -37,6 +37,14 @@ export default [
         action: 'Index.form'
     },
     {
+        path: '/nested/third',
+        action: 'Nested.third'
+    },
+    {
+        path: '/nested/:name',
+        action: 'Nested'
+    },
+    {
         path: '(/)',
         action: 'Index.index'
     },
